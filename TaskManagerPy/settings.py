@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'task_manager.apps.TaskManagerConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -74,8 +75,12 @@ WSGI_APPLICATION = 'TaskManagerPy.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'TaskManager',
+        'USER': 'catalin2',
+        'PASSWORD': 'catalin2',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
