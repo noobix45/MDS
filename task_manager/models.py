@@ -157,6 +157,10 @@ class Task(models.Model):
 class Utilizator(models.Model):
     id_utilizator = models.AutoField(primary_key=True)
     email = models.CharField(unique=True, max_length=50)
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE,db_column='id_user')
+
+    def __str__(self):
+        return f"{self.user.username}"
 
     class Meta:
         managed = False
