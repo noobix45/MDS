@@ -1,11 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
-from .forms import UserRegistrationForm
-from django.contrib.auth.decorators import login_required
+from task_manager.forms.user_forms import UserRegistrationForm
 from django.contrib.auth import logout
-from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -21,7 +18,7 @@ def register(request):
             return redirect('home')
     else:
         form = UserRegistrationForm()
-    return render(request,'register.html',{'form':form})
+    return render(request, 'register.html', {'form':form})
 
 def login_view(request):
     if request.method == 'POST':

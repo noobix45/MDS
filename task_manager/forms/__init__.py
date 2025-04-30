@@ -1,0 +1,2 @@
+from task_manager.forms.user_forms import UserRegistrationForm
+from task_manager.forms.task_forms import TaskForm

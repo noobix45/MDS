@@ -136,6 +136,7 @@ class Notificare(models.Model):
 
 class Task(models.Model):
     id_task = models.AutoField(primary_key=True)
+    titlu = models.CharField(max_length=50, blank=True, null=True)
     importanta = models.SmallIntegerField()
     deadline = models.DateField(blank=True, null=True)
     grup_task = models.BooleanField(blank=True, null=True,default=False)
@@ -144,6 +145,9 @@ class Task(models.Model):
     def_time = models.TimeField(blank=True, null=True)
     data_creare = models.DateTimeField(blank=True, null=True,auto_now_add=True)
     data_completare = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.titlu or f"Task #{self.id_task}"
 
     class Meta:
         managed = False
