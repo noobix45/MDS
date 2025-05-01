@@ -7,4 +7,4 @@ from .models import Utilizator, AuthUser
 @receiver(post_save, sender=User)
 def create_utilizator(sender, instance, created, **kwargs):
     if created:
-        Utilizator.objects.create(user_id=instance.id,email=instance.email)
+        Utilizator.objects.create(user=instance,email=instance.email)

@@ -2,13 +2,21 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from task_manager.forms.user_forms import UserRegistrationForm
 from django.contrib.auth import logout
-
+from django.contrib.auth.decorators import login_required
+from task_manager.models import Task,Utilizator
 
 # Create your views here.
 
-#@login_required
+# @login_required
 def home(request):
-    return render(request, 'home.html')
+    tasks = []
+    if request.user.is_authenticated:
+        try:
+            utilizator = Utilizator.objects.get(user=request.user)
+            tasks = Task.objects.filter(utilizatori_task__id_utilizator=utilizator)
+        except Utilizator.DoesNotExist:
+            tasks = []  # sau lasă gol
+    return render(request, 'home.html', {'tasks': tasks})
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)

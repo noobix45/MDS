@@ -7,9 +7,9 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q,Manager
 from django.db.models.functions import Now
-
+from django.contrib.auth.models import User
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -145,6 +145,7 @@ class Task(models.Model):
     def_time = models.TimeField(blank=True, null=True)
     data_creare = models.DateTimeField(blank=True, null=True,auto_now_add=True)
     data_completare = models.DateField(blank=True, null=True)
+    objects = models.Manager()
 
     def __str__(self):
         return self.titlu or f"Task #{self.id_task}"
@@ -161,7 +162,8 @@ class Task(models.Model):
 class Utilizator(models.Model):
     id_utilizator = models.AutoField(primary_key=True)
     email = models.CharField(unique=True, max_length=50)
-    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE,db_column='id_user')
+    user = models.OneToOneField(User, on_delete=models.CASCADE,db_column='id_user')
+    objects: Manager["Utilizator"] = models.Manager()
 
     def __str__(self):
         return f"{self.user.username}"
@@ -183,9 +185,10 @@ class UtilizatorGrup(models.Model):
 
 
 class UtilizatorTask(models.Model):
-    # pk = models.CompositePrimaryKey('id_utilizator', 'id_task')
-    id_utilizator = models.ForeignKey(Utilizator, models.CASCADE, db_column='id_utilizator')
-    id_task = models.ForeignKey(Task, models.CASCADE, db_column='id_task')
+    id = models.AutoField(primary_key=True)
+    id_utilizator = models.ForeignKey(Utilizator, models.CASCADE, db_column='id_utilizator',related_name='taskuri_user')
+    id_task = models.ForeignKey(Task, models.CASCADE, db_column='id_task',related_name='utilizatori_task')
+    # objects = models.Manager()
 
     class Meta:
         managed = False
