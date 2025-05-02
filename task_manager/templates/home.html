@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+        .checkbox-col{
+            display: none;
+        }
+    </style>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -11,18 +16,19 @@
         <a href="{% url 'logout' %}">Logout</a>
 
             <h2>My Tasks</h2>
-            <ul>
-                {% for task in tasks %}
-                    <li>{{ task.titlu }} - Importanță: {{ task.importanta }}</li>
-                {% empty %}
-                    <li>No tasks found.</li>
-                {% endfor %}
-            </ul>
+            <button id = "delete-mode-btn" onclick="enableDeleteMode()">Delete Tasks</button>
+            <button id="cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
+
+            {% include "delete_tasks_form.html" %}
+
             <a href ="{% url 'create_task' %}">Create Task</a>
-        {% else %}
+
+    {% else %}
         <p>Welcome, guest!</p>
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
+
+
 </body>
 </html>

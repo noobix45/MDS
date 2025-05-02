@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.db import IntegrityError
 from task_manager.models import UtilizatorTask,Utilizator
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from task_manager.models  import Task
 
 def create_task(request):
 
@@ -26,3 +28,10 @@ def create_task(request):
         form = TaskForm() # cer formularul ca sa il pot completa
 
     return render(request, 'create_task.html', {'form': form})
+
+@login_required
+def delete_tasks(request):
+    if request.method == 'POST':
+        task_ids = request.POST.getlist('task_ids')
+        Task.objects.filter(id_task__in=task_ids).delete()
+    return redirect('home')
