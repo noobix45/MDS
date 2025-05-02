@@ -10,11 +10,18 @@ from task_manager.models  import Task
 
 def create_task(request):
 
+    referrer = request.META.get('HTTP_REFERER','')
+
+    is_from_group = 'group' in referrer
+
     if request.method == 'POST': # trimit datele catre baza de date
         form = TaskForm(request.POST)
         if form.is_valid():
             try:
                 task = form.save(commit=False)
+
+                task.grup_task = is_from_group
+
                 task.save() #salvez task
                 utilizator = Utilizator.objects.get(user=request.user)
                 UtilizatorTask.objects.create(id_utilizator=utilizator, id_task=task)
@@ -27,7 +34,7 @@ def create_task(request):
     else:
         form = TaskForm() # cer formularul ca sa il pot completa
 
-    return render(request, 'create_task.html', {'form': form})
+    return render(request, 'create_task.html', {'form': form,'is_from_group': is_from_group})
 
 @login_required
 def delete_tasks(request):

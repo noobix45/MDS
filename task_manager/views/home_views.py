@@ -13,7 +13,7 @@ def home(request):
     if request.user.is_authenticated:
         try:
             utilizator = Utilizator.objects.get(user=request.user)
-            tasks = Task.objects.filter(utilizatori_task__id_utilizator=utilizator)
+            tasks = Task.objects.filter(utilizatori_task__id_utilizator=utilizator,grup_task=False)
         except Utilizator.DoesNotExist:
             tasks = []  # sau lasă gol
     return render(request, 'home.html', {'tasks': tasks})

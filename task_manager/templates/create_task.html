@@ -23,7 +23,7 @@
         <p>{{ form.titlu.label_tag }} {{ form.titlu }}</p>
         <p>{{ form.importanta.label_tag }} {{ form.importanta }}</p>
         <p>{{ form.deadline.label_tag }} {{ form.deadline }}</p>
-        <p>{{ form.grup_task.label_tag }} {{ form.grup_task }}</p>
+{#        <p>{{ form.grup_task.label_tag }} {{ form.grup_task }}</p>#} {# setata atuomat in backend #}
         <p>{{ form.repetitiv.label_tag }} {{ form.repetitiv }}</p>
 
         <div id="days-def-wrapper">
@@ -36,13 +36,22 @@
 
     <script>
         const repetitivInput = document.getElementById("id_repetitiv");
+        {# id urile paragrafelor ca sa le afisez #}
         const daysField = document.getElementById("days-field");
         const timeField = document.getElementById("time-field");
+        {# id urile implicite ale imputurilor pentru reset #}
+        const daysInput = document.getElementById("id_days_to_do");
+        const timeInput = document.getElementById("id_def_time");
 
         function toggleFields() {
             const show = repetitivInput.checked;
             daysField.style.display = show ? "block" : "none";
             timeField.style.display = show ? "block" : "none";
+            if(!show)  {#repetitiv e nebifat sau devine fals#}
+            {
+                if(daysInput) daysInput.value='';
+                if(timeInput) timeInput.value='';
+            }
         }
 
         repetitivInput.addEventListener("change", toggleFields);

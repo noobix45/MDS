@@ -9,7 +9,8 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['titlu', 'importanta', 'deadline', 'grup_task', 'repetitiv', 'days_to_do', 'def_time']
         widgets = {
-            'repetitiv': forms.CheckboxInput(attrs={'id': 'id_repetitiv'})
+            'repetitiv': forms.CheckboxInput(attrs={'id': 'id_repetitiv'}),
+            'importanta': forms.NumberInput(attrs={'min':1, 'max':5}),
         }
 
     def clean_days_to_do(self):
