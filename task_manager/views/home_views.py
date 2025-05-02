@@ -12,8 +12,16 @@ def home(request):
     tasks = []
     if request.user.is_authenticated:
         try:
+            sort_criteria = request.GET.get('sort')
             utilizator = Utilizator.objects.get(user=request.user)
             tasks = Task.objects.filter(utilizatori_task__id_utilizator=utilizator,grup_task=False)
+
+            if sort_criteria=='importanta':
+                tasks = tasks.order_by('importanta')
+            elif sort_criteria=='deadline':
+                tasks = tasks.order_by('deadline')
+            elif sort_criteria=='titlu':
+                tasks = tasks.order_by('titlu')
         except Utilizator.DoesNotExist:
             tasks = []  # sau lasă gol
     return render(request, 'home.html', {'tasks': tasks})

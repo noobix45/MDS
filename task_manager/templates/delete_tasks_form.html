@@ -6,7 +6,14 @@
                 <span class="checkbox-col">
                     <input type="checkbox" name="task_ids" value="{{ task.id_task }}">
                 </span>
-                {{ task.titlu }} - Importanță: {{ task.importanta }}
+                <strong>{{ task.titlu }}</strong> | Importanta: {{ task.importanta }} |
+                Deadline: {{ task.deadline|date:"d-m-Y" }} |
+                {% if task.days_to_do %}
+                    Days to do: {{ task.days_to_do }} |
+                {% endif %}
+                {% if task.def_time %}
+                    Notificare default: {{ task.def_time }}
+                {% endif %}
             </li>
         {% empty %}
             <li>No tasks found.</li>
@@ -21,6 +28,8 @@
         document.getElementById('cancel-delete-btn').style.display='inline-block';
         document.getElementById('confirm-delete-btn').style.display='inline-block';
         document.getElementById('delete-mode-btn').style.display='none';
+        document.getElementById('select-all-btn').style.display='inline-block';
+        document.getElementById('deselect-all-btn').style.display='inline-block';
     }
     function disableDeleteMode(){
         document.querySelectorAll('.checkbox-col').forEach(el=>el.style.display='none');
@@ -28,8 +37,14 @@
         document.getElementById('cancel-delete-btn').style.display='none';
         document.getElementById('confirm-delete-btn').style.display='none';
         document.getElementById('delete-mode-btn').style.display='inline-block';
+        document.getElementById('select-all-btn').style.display='none';
+        document.getElementById('deselect-all-btn').style.display='none';
     }
     function confirmDelete(){
         return confirm("Taskurile vor fi sterse definitiv. Esti sigur?");
+    }
+    function toggleAllCheckboxes(checked){
+        const checkboxes = document.querySelectorAll('input[name="task_ids"]');
+        checkboxes.forEach(cb => cb.checked = checked);
     }
 </script>

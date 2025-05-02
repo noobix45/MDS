@@ -17,8 +17,16 @@
 
             <h2>My Tasks</h2>
             <button id = "delete-mode-btn" onclick="enableDeleteMode()">Delete Tasks</button>
-            <button id="cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
+            <button id = "cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
+            <button id ="select-all-btn" type="button" onclick="toggleAllCheckboxes(true)" style="display: none;">Select All</button>
+            <button id = "deselect-all-btn" type="button" onclick="toggleAllCheckboxes(false)" style="display:none;">Deselect All</button>
 
+            <form method="get">
+                <button type="submit" name="sort" value="importanta">Sorteaza după importanta</button>
+                <button type="submit" name="sort" value="deadline">Sorteaza dupa deadline</button>
+                <button type="submit" name="sort" value="titlu">Sorteaza alfabetic</button>
+                <button type="submit" name="sort">Reseteaza filtre</button>
+            </form>
         {#  tot aici afisez taskurile #}
             {% include "delete_tasks_form.html" %}
 
