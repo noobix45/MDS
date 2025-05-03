@@ -21,6 +21,11 @@
             <button id ="select-all-btn" type="button" onclick="toggleAllCheckboxes(true)" style="display: none;">Select All</button>
             <button id = "deselect-all-btn" type="button" onclick="toggleAllCheckboxes(false)" style="display:none;">Deselect All</button>
 
+            <label>
+                <input type="checkbox" id="toggle-completed" checked>
+                Show completed tasks
+            </label>
+
             <form method="get">
                 <button type="submit" name="sort" value="importanta">Sorteaza după importanta</button>
                 <button type="submit" name="sort" value="deadline">Sorteaza dupa deadline</button>

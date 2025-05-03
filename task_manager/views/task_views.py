@@ -1,12 +1,15 @@
 # task_manager/task_views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from task_manager.forms import TaskForm
 from django.contrib import messages
 from django.db import IntegrityError
 from task_manager.models import UtilizatorTask,Utilizator
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-from task_manager.models  import Task
+from task_manager.models import Task
+from django.http import JsonResponse
+from django.utils import timezone
+import json
 
 def create_task(request):
 
@@ -42,3 +45,35 @@ def delete_tasks(request):
         task_ids = request.POST.getlist('task_ids')
         Task.objects.filter(id_task__in=task_ids).delete()
     return redirect('home')
+
+def edit_task(request,task_id):
+    task = get_object_or_404(Task, id_task=task_id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+            form = TaskForm(instance=task)
+
+    return render(request,'edit_task.html',{'form':form,'task':task})
+
+def update_task_completion(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        completed = data.get('completed')
+
+        try:
+            task = Task.objects.get(id_task=task_id)
+
+            if completed:
+                task.data_completare = timezone.now()
+            else:
+                task.data_completare = None
+
+            task.save()
+            return JsonResponse({'success': True})
+        except Task.DoesNotExist:
+            return JsonResponse({'success': False,'error':'Task not found'},status=404)
+    return JsonResponse({'success': False,'error':'Invalid request method'},status=400)

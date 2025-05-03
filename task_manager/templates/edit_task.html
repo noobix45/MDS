@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+</head>
+<body>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>Edit Task</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <p>{{ form.titlu.label_tag }} {{ form.titlu }}</p>
+        <p>{{ form.importanta.label_tag }} {{ form.importanta }}</p>
+        <p>{{ form.deadline.label_tag }} {{ form.deadline }}</p>
+        <p>{{ form.repetitiv.label_tag }} {{ form.repetitiv }}</p>
+
+        <div id="days-def-wrapper">
+            <p id="days-field">{{ form.days_to_do.label_tag }} {{ form.days_to_do }}</p>
+            <p id="time-field">{{ form.def_time.label_tag }} {{ form.def_time }}</p>
+        </div>
+
+        <p>{{ form.data_completare.label_tag }} {{ form.data_completare }}</p>
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script>
+        const repetitivInput = document.getElementById("id_repetitiv");
+        const daysField = document.getElementById("days-field");
+        const timeField = document.getElementById("time-field");
+        const daysInput = document.getElementById("id_days_to_do");
+        const timeInput = document.getElementById("id_def_time");
+
+        function toggleFields() {
+            const show = repetitivInput.checked;
+            daysField.style.display = show ? "block" : "none";
+            timeField.style.display = show ? "block" : "none";
+            if(!show) {
+                if(daysInput) daysInput.value = '';
+                if(timeInput) timeInput.value = '';
+            }
+        }
+
+        repetitivInput.addEventListener("change", toggleFields);
+        document.addEventListener("DOMContentLoaded", toggleFields);
+    </script>
+
+    <a href="{% url 'home' %}">
+        <button type="button">Back to Home</button>
+    </a>
+
+</body>
+</html>
