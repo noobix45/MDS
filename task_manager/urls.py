@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete-task/',views.delete_tasks, name='delete_tasks'),
     path('task/<int:task_id>/', views.edit_task, name='edit-task'),
     path('update-task-completion/', views.update_task_completion, name='update_task_completion'),
+    path('sort-ai/', views.ai_prioritize_user_tasks, name='ai_prioritize_user_tasks'),
 ]

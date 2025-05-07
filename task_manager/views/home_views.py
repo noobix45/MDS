@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from task_manager.forms.user_forms import UserRegistrationForm
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from task_manager.models import Task,Utilizator
 
 # Create your views here.
@@ -22,8 +21,13 @@ def home(request):
                 tasks = tasks.order_by('deadline')
             elif sort_criteria=='titlu':
                 tasks = tasks.order_by('titlu')
+            elif sort_criteria == 'prioritate':
+                tasks = tasks.order_by('prioritate')
+            else:
+                if tasks.filter(prioritate__gt=0.0).exists():
+                    tasks = tasks.order_by('prioritate')
         except Utilizator.DoesNotExist:
-            tasks = []  # sau lasă gol
+            tasks = []
     return render(request, 'home.html', {'tasks': tasks})
 def register(request):
     if request.method == 'POST':

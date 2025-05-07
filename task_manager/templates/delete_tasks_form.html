@@ -7,8 +7,11 @@
                     <input type="checkbox" class="delete-checkbox" name="task_ids" value="{{ task.id_task }}">
                 </span>
 
+            {% if not task.repetitiv %}
                 <input type="checkbox" class="task-checkbox" data-task-id="{{ task.id_task }}"
                     {% if task.data_completare %}checked{% endif %}>
+            {% endif %}
+
             <a style="text-decoration: none;" href="{% url 'edit-task' task.id_task %}"><strong>{{ task.titlu }}</strong></a> | Importanta: {{ task.importanta }} |
                 Deadline: {{ task.deadline|date:"d-m-Y" }} |
                 {% if task.days_to_do %}

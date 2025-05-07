@@ -10,6 +10,8 @@ from django.db import models
 from django.db.models import Q,Manager
 from django.db.models.functions import Now
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -143,8 +145,9 @@ class Task(models.Model):
     repetitiv = models.BooleanField(blank=True, null=True,default=False)
     days_to_do = ArrayField(models.SmallIntegerField(), blank=True, null=True)
     def_time = models.TimeField(blank=True, null=True)
-    data_creare = models.DateTimeField(blank=True, null=True,auto_now_add=True)
+    data_creare = models.DateTimeField(blank=True, null=True,default=timezone.now)
     data_completare = models.DateField(blank=True, null=True)
+    prioritate = models.FloatField(null=True,blank=True,default=0.0)
     objects = models.Manager()
 
     def __str__(self):

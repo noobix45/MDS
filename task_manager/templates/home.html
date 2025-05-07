@@ -15,7 +15,19 @@
         <p>Welcome, {{ user.username }}!</p>
         <a href="{% url 'logout' %}">Logout</a>
 
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
             <h2>My Tasks</h2>
+        <p style="color: #555; font-style: italic; margin-top: -10px;">
+            Taskurile sunt ordonate după <strong>prioritate</strong>, dacă s-a făcut deja o sortare cu AI și nu ai ales alt filtru.
+        </p>
+
             <button id = "delete-mode-btn" onclick="enableDeleteMode()">Delete Tasks</button>
             <button id = "cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
             <button id ="select-all-btn" type="button" onclick="toggleAllCheckboxes(true)" style="display: none;">Select All</button>
@@ -31,6 +43,11 @@
                 <button type="submit" name="sort" value="deadline">Sorteaza dupa deadline</button>
                 <button type="submit" name="sort" value="titlu">Sorteaza alfabetic</button>
                 <button type="submit" name="sort">Reseteaza filtre</button>
+            </form>
+
+            <form action="{% url 'ai_prioritize_user_tasks' %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit">Sortează automat cu AI</button>
             </form>
         {#  tot aici afisez taskurile #}
             {% include "delete_tasks_form.html" %}
