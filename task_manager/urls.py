@@ -10,6 +10,8 @@ urlpatterns = [
     path('create-task/', views.create_task, name='create_task'),
     path('delete-task/',views.delete_tasks, name='delete_tasks'),
     path('task/<int:task_id>/', views.edit_task, name='edit-task'),
+    path('task/delete/<int:task_id>/', views.delete_task, name='delete_task'),
+    path('api/delete-notificare/<int:id_notif>/', views.delete_notificare_api, name='delete_notificare_api'),
     path('update-task-completion/', views.update_task_completion, name='update_task_completion'),
     path('sort-ai/', views.ai_prioritize_user_tasks, name='ai_prioritize_user_tasks'),
 ]

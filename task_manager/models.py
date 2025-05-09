@@ -123,19 +123,6 @@ class Grup(models.Model):
         db_table = 'grup'
 
 
-class Notificare(models.Model):
-    id_notificare = models.AutoField(primary_key=True)
-    id_task = models.ForeignKey('Task', models.CASCADE, db_column='id_task')
-    notif_dt = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'notificare'
-        constraints = [
-            models.CheckConstraint(check=Q(notif_dt__gt=Now()), name='valid_time1')
-        ]
-
-
 class Task(models.Model):
     id_task = models.AutoField(primary_key=True)
     titlu = models.CharField(max_length=50, blank=True, null=True)
@@ -159,6 +146,21 @@ class Task(models.Model):
         constraints = [
             models.CheckConstraint(check=models.Q(deadline__gte=Now()), name='valid_date'),
             models.CheckConstraint(check=models.Q(importanta__gte=1, importanta__lte=5), name='importanta_v'),
+        ]
+
+
+class Notificare(models.Model):
+    id_notificare = models.AutoField(primary_key=True)
+    id_task = models.ForeignKey('Task', models.CASCADE, db_column='id_task')
+    notif_dt = models.DateTimeField()
+    mesaj = models.CharField(max_length=50, blank=True, null=True)
+    trimis = models.BooleanField(blank=True,null=True,default=False)
+
+    class Meta:
+        managed = False
+        db_table = 'notificare'
+        constraints = [
+            models.CheckConstraint(check=Q(notif_dt__gt=Now()), name='valid_time1')
         ]
 
 

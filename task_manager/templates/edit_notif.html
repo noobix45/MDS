@@ -1,0 +1,54 @@
+{% for notif in notificari %}
+    <fieldset id="notif-box-{{ notif.id_notificare }}">
+    <legend>Notificare {{ forloop.counter }}:</legend>
+    <p>
+        <label for="notif_date_{{ forloop.counter }}">Data:</label>
+        <input type="date" id="notif_date_{{ forloop.counter }}" name="notif_date_{{ forloop.counter }}"
+            value="{{ notif.notif_dt|date:'Y-m-d' }}">
+    </p>
+    <p>
+        <label for="notif_time_{{ forloop.counter }}">Ora:</label>
+        <input type="time" id="notif_time_{{ forloop.counter }}" name="notif_time_{{ forloop.counter }}"
+            value="{{ notif.notif_dt|date:'H:i' }}">
+    </p>
+    <p>
+        <label for="notif_msg_{{ forloop.counter }}">Mesaj:</label>
+        <input type="text" id="notif_msg_{{ forloop.counter }}" name="notif_msg_{{ forloop.counter }}"
+            value="{{ notif.mesaj }}">
+    </p>
+
+    {% if notif.id_notificare %}
+         <button type="button" style="color: red;" onclick="stergeNotificare({{ notif.id_notificare }})">
+            Șterge notificare
+        </button>
+    {% endif %}
+
+    </fieldset>
+{% endfor %}
+
+<script>
+function stergeNotificare(id) {
+    fetch(`/api/delete-notificare/${id}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCSRFToken()
+        }
+    }).then(response => {
+        if (response.ok) {
+            // Golește câmpurile notificării
+            const box = document.getElementById(`notif-box-${id}`);
+            if (box) {
+                const inputs = box.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
+            }
+            alert("Notificarea a fost ștearsă cu succes!");
+        } else {
+            alert("Eroare la ștergere.");
+        }
+    });
+}
+
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+</script>

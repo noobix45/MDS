@@ -31,6 +31,18 @@
             <p id="time-field">{{ form.def_time.label_tag }} {{ form.def_time }}</p>
         </div>
 
+        <h3>Notificări (max 3)</h3>
+
+        {% for i in "123" %}
+            <fieldset>
+                <legend>Notificare {{ i }}</legend>
+                <p>Data: <input type="date" name="notif_date_{{ i }}"></p>
+                <p>Ora: <input type="time" name="notif_time_{{ i }}"></p>
+                <p>Mesaj: <input type="text" name="notif_msg_{{ i }}" maxlength="50"></p>
+            </fieldset>
+        {% endfor %}
+
+
         <button type="submit">Create Task</button>
     </form>
 
