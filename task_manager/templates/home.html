@@ -1,9 +1,18 @@
 <!-- templates/home.html -->
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    {% if user.is_authenticated %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'css/guest.css' %}">
+    {% endif %}
+
     <style>
         .checkbox-col{
             display: none;
@@ -12,52 +21,78 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-        <p>Welcome, {{ user.username }}!</p>
-        <a href="{% url 'logout' %}">Logout</a>
+        <div id="home-block">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <a class = "links" href="{% url 'logout' %}">Logout</a>
 
         {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-            <h2>My Tasks</h2>
+            <h1>My Tasks</h1>
         <p style="color: #555; font-style: italic; margin-top: -10px;">
             Taskurile sunt ordonate după <strong>prioritate</strong>, dacă s-a făcut deja o sortare cu AI și nu ai ales alt filtru.
         </p>
 
-            <button id = "delete-mode-btn" onclick="enableDeleteMode()">Delete Tasks</button>
-            <button id = "cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
-            <button id ="select-all-btn" type="button" onclick="toggleAllCheckboxes(true)" style="display: none;">Select All</button>
-            <button id = "deselect-all-btn" type="button" onclick="toggleAllCheckboxes(false)" style="display:none;">Deselect All</button>
-
-            <label>
-                <input type="checkbox" id="toggle-completed" checked>
-                Show completed tasks
-            </label>
-
+        <div id="sortare-ai">
+            <form action="{% url 'ai_prioritize_user_tasks' %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit">Sortează automat cu AI</button>
+            </form>
+        </div>
+        <div id="sortari">
             <form method="get">
                 <button type="submit" name="sort" value="importanta">Sorteaza după importanta</button>
                 <button type="submit" name="sort" value="deadline">Sorteaza dupa deadline</button>
                 <button type="submit" name="sort" value="titlu">Sorteaza alfabetic</button>
                 <button type="submit" name="sort">Reseteaza filtre</button>
             </form>
+        </div>
+        <div id="butoane-delete">
+            <button id = "delete-mode-btn" onclick="enableDeleteMode()">Delete Tasks</button>
+            <button id = "cancel-delete-btn" onclick="disableDeleteMode()" style="display: none;">Cancel</button>
+            <button id ="select-all-btn" type="button" onclick="toggleAllCheckboxes(true)" style="display: none;">Select All</button>
+            <button id = "deselect-all-btn" type="button" onclick="toggleAllCheckboxes(false)" style="display:none;">Deselect All</button>
+        </div>
 
-            <form action="{% url 'ai_prioritize_user_tasks' %}" method="post" style="margin-top: 10px;">
-                {% csrf_token %}
-                <button type="submit">Sortează automat cu AI</button>
-            </form>
+        <div id="crit-afisare">
+            <div id="completed">
+                <label>
+                    <input type="checkbox" id="toggle-completed" checked>
+                    Show completed tasks
+                </label>
+            </div>
+
+            <div id="repetitive">
+                <label>
+                    <input type="checkbox" id="toggle-repetitive" checked>
+                    Show repetitive tasks
+                </label>
+            </div>
+        </div>
+
         {#  tot aici afisez taskurile #}
             {% include "delete_tasks_form.html" %}
 
-            <a href ="{% url 'create_task' %}">Create Task</a>
-
+            <a class = "links" href ="{% url 'create_task' %}">Create Task</a>
+        </div>
     {% else %}
-        <p>Welcome, guest!</p>
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
+        <div id="guest-block">
+            <h1>Welcome, guest!</h1>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+
+            <div id="intro">
+                <p>Aera-taskmanager este o aplicație web intuitivă creată pentru a-ți organiza și prioritiza taskurile
+                zilnice. Cu ajutorul AI-ului Aera, vei putea să sortezi automat sarcinile în funcție de importanță,
+                deadline și alți factori personalizați, economisindu-ți timp și energie.
+                </p>
+            </div>
+        </div>
     {% endif %}
 
 

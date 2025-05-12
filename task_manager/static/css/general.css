@@ -1,0 +1,23 @@
+:root{
+    --light-blue: #A9E0F4;
+    --white: #CBEBF8;
+    --hover-blue: #66B2FF;
+    --myblue: #4C9CD9;
+    --border-blue: #3ca8d4;
+    --blue-gray: #34495E;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /*min-height: 100vh;*/
+    height: 100%;
+
+    background-image: url('../img/fundal.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    font-family: 'Segoe UI', sans-serif;
+}

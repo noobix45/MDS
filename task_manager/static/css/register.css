@@ -1,0 +1,62 @@
+#register-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.8); /* alb translucid */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 400px;
+    margin: 100px auto;
+}
+
+#register-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-field {
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-field:focus {
+    border-color: var(--hover-blue);
+    box-shadow: 0 0 8px rgba(102, 178, 255, 0.5);
+    outline: none;
+}
+
+#register-block button {
+    background-color: var(--hover-blue);
+    color: #fff;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+}
+
+#register-block button:hover {
+    background-color: var(--myblue);
+    transform: scale(1.05);
+}
+
+#register-block button:active {
+    transform: scale(1);
+}

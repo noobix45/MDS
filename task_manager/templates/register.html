@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <div id="register-block">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="errors"> {# un div pentru mesaje de eroare #}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        <div class="register-inputs">
+            <div class="form-field"> {# inputuri #}
+                {{ form.username }}
+            </div>
+
+            <div class="form-field">
+                {{ form.email }}
+            </div>
+
+            <div class="form-field">
+                {{ form.password }}
+            </div>
+        </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
 </body>
 </html>

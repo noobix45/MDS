@@ -1,0 +1,164 @@
+#create-block{
+    padding: 40px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.8); /* alb translucid */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 1400px;
+    margin: 25px auto;
+    height: auto;
+
+    box-sizing: border-box;
+}
+
+.input-field {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    margin:10px;
+}
+
+.input-field:focus {
+    border-color: var(--hover-blue);
+    box-shadow: 0 0 8px rgba(102, 178, 255, 0.5);
+    outline: none;
+}
+
+.form-group label{
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.checkbox-field {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-blue);
+    border-radius: 6px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.checkbox-field:checked{
+    background-color: var(--light-blue);
+    border-color: #3ca8d4;
+}
+
+.checkbox-field::after{
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 4px;
+    width: 6px;
+    height: 12px;
+    border: solid #34495E;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.checkbox-field:checked::after{
+    opacity: 1;
+}
+
+.checkbox-label{
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    gap:10px;
+}
+
+.links{
+    box-sizing: border-box;
+    text-decoration: none;
+    background-color: var(--hover-blue);
+    color: #fff;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+.links:hover{
+    background-color: var(--myblue);
+    transform: scale(1.05);
+}
+
+.links:active{
+    transform: scale(1);
+}
+
+.notification-fieldset {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 15px 0;
+    background-color: #f4f7fb; /* Un albastru foarte palid pentru fundal */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Umbră ușoară pentru a scoate în evidență */
+}
+
+.notification-fieldset legend {
+    font-weight: bold;
+    color: var(--myblue); /* Folosim culoarea principală pentru un aspect consistent */
+    font-size: 1.2em;
+    padding-left: 10px;
+}
+
+.notification-group {
+    margin-bottom: 15px;
+}
+
+.notification-group label {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    color: #555;
+}
+
+.notification-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.notification-group input:focus {
+    border-color: var(--hover-blue);
+    box-shadow: 0 0 8px rgba(102, 178, 255, 0.5);
+    outline: none;
+}
+
+.notification-group input[type="date"],
+.notification-group input[type="time"] {
+    width: auto;
+}
+
+.notification-group input[type="text"] {
+    max-width: 100%;
+}
+
+.notification-fieldset .form-group input:focus {
+    border-color: #3ca8d4;
+}
+
+/* Stiluri pentru butoanele din notificări */
+.notification-fieldset .links {
+    display: block;
+    margin-top: 15px;
+}
