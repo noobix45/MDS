@@ -27,10 +27,10 @@
         <div id="logout-delete-block">
             <a class = "links" href="{% url 'logout' %}">Logout</a>
 
-{#            <form action="{% url 'delete-account' %}" method="post" onsubmit="return confirm('Ești sigur că vrei să-ți ștergi contul?');">#}
-{#                {% csrf_token %}#}
-{#                <button type="submit" id="delete-account-btn">Delete Account</button>#}
-{#            </form>#}
+            <form action="{% url 'delete-account' %}" method="post" onsubmit="return confirm('Ești sigur că vrei să-ți ștergi contul?');">
+                {% csrf_token %}
+                <button type="submit" id="delete-account-btn">Delete Account</button>
+            </form>
         </div>
 
         {% if messages %}
@@ -95,7 +95,7 @@
             <a href="{% url 'register' %}">Register</a>
 
             <div id="intro">
-                <p>Aera-taskmanager este o aplicație web intuitivă creată pentru a-ți organiza și prioritiza taskurile
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;Aera-taskmanager este o aplicație web intuitivă creată pentru a-ți organiza și prioritiza taskurile
                 zilnice. Cu ajutorul AI-ului Aera, vei putea să sortezi automat sarcinile în funcție de importanță,
                 deadline și alți factori personalizați, economisindu-ți timp și energie.
                 </p>

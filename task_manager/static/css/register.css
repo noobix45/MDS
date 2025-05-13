@@ -1,7 +1,6 @@
 #register-block{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
     padding: 40px;
@@ -18,8 +17,15 @@
 #register-inputs {
     display: flex;
     flex-direction: column;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    width: 100%;
+}
+
+.form-field {
+    width: 100%;
+    display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .input-field {
@@ -39,7 +45,14 @@
     outline: none;
 }
 
-#register-block button {
+#register-block form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#register-block button{
     background-color: var(--hover-blue);
     color: #fff;
     padding: 12px 20px;
@@ -49,14 +62,22 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
-    width: 100%;
+    /*width: 100%;*/
+
+    width: auto;
+    align-self: center;
+    min-width: 150px;
 }
 
-#register-block button:hover {
+#register-block button:hover{
     background-color: var(--myblue);
     transform: scale(1.05);
 }
 
-#register-block button:active {
+#register-block button:active{
     transform: scale(1);
+}
+
+#redirect-to-login a{
+    text-decoration: none;
 }
