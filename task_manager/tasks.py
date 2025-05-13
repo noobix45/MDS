@@ -22,19 +22,21 @@ def trimite_notificari_periodic():
     logger.info(f"Found {notificari.count()} notifications to process.")
 
     for notif in notificari:
+        task = notif.id_task
         utilizatori_task = UtilizatorTask.objects.filter(id_task=notif.id_task)
 
         for ut in utilizatori_task:
             if ut.id_utilizator.email:
+
                 logger.info(f"Sending email to {ut.id_utilizator.email}")
                 print("Sending email to {}".format(ut.id_utilizator.email))
                 send_email_mailjet(
                     destinatar=ut.id_utilizator.email,
-                    subiect="Notificare task",
+                    subiect=task.titlu,
                     continut_html=f"""
                     <html>
                       <body>
-                        <h2>Notificare Task</h2>
+                        <h2>{task.titlu}</h2>
                         <p>{notif.mesaj if notif.mesaj else "Mesaj de test"}</p>
                       </body>
                     </html>
@@ -43,7 +45,11 @@ def trimite_notificari_periodic():
                 )
                 total_emailuri_trimise += 1
 
-        notif.trimis = True
+        if task.repetitiv:
+            notif.notif_dt += timedelta(days=7)
+            notif.trimis = False
+        else:
+            notif.trimis = True
         notif.save()
 
     return f'Trimise {total_emailuri_trimise} emailuri pentru {notificari.count()} notificări.'

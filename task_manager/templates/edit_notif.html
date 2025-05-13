@@ -1,24 +1,24 @@
 {% for notif in notificari %}
-    <fieldset id="notif-box-{{ notif.id_notificare }}">
+    <fieldset class="notification-fieldset" id="notif-box-{{ notif.id_notificare }}">
     <legend>Notificare {{ forloop.counter }}:</legend>
-    <p>
+    <div class="form-group notification-group">
         <label for="notif_date_{{ forloop.counter }}">Data:</label>
-        <input type="date" id="notif_date_{{ forloop.counter }}" name="notif_date_{{ forloop.counter }}"
+        <input class = "input-field" type="date" id="notif_date_{{ forloop.counter }}" name="notif_date_{{ forloop.counter }}"
             value="{{ notif.notif_dt|date:'Y-m-d' }}">
-    </p>
-    <p>
+    </div>
+    <div class="form-group notification-group">
         <label for="notif_time_{{ forloop.counter }}">Ora:</label>
-        <input type="time" id="notif_time_{{ forloop.counter }}" name="notif_time_{{ forloop.counter }}"
+        <input class="input-field" type="time" id="notif_time_{{ forloop.counter }}" name="notif_time_{{ forloop.counter }}"
             value="{{ notif.notif_dt|date:'H:i' }}">
-    </p>
-    <p>
+    </div>
+    <div class="form-group notification-group">
         <label for="notif_msg_{{ forloop.counter }}">Mesaj:</label>
-        <input type="text" id="notif_msg_{{ forloop.counter }}" name="notif_msg_{{ forloop.counter }}"
+        <input class="input-field" type="text" id="notif_msg_{{ forloop.counter }}" name="notif_msg_{{ forloop.counter }}"
             value="{{ notif.mesaj }}">
-    </p>
+    </div>
 
     {% if notif.id_notificare %}
-         <button type="button" style="color: red;" onclick="stergeNotificare({{ notif.id_notificare }})">
+         <button id="delete-notif-btn" class = "links" type="button" onclick="stergeNotificare({{ notif.id_notificare }})">
             Șterge notificare
         </button>
     {% endif %}

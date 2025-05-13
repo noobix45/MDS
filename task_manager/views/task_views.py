@@ -10,7 +10,7 @@ from task_manager.models import Task
 from django.http import JsonResponse
 from django.utils import timezone
 import json
-from datetime import datetime,date
+from datetime import datetime,date, timedelta
 
 def create_task(request):
 
@@ -50,6 +50,22 @@ def create_task(request):
                             notificare.save()
                         except ValueError:
                             messages.warning(request, f'Notificarea {i} are un format invalid.')
+
+                if task.repetitiv and (task.days_to_do and task.def_time):
+                    azi = timezone.now().date()
+                    zi_azi = azi.isoweekday() # din zi in cifra
+                    for zi in task.days_to_do:
+                        delta_zile = (zi - zi_azi) %7 #urmatoarea zi de notifiacre incepand de azi
+                        data_notif = azi+timedelta(days=delta_zile) #azi+nr de zile pana la notificare
+                        ora_notif = datetime.combine(data_notif, task.def_time) #datetime field
+                        ora_notif = timezone.make_aware(ora_notif)
+
+                        Notificare.objects.create(
+                            id_task=task,
+                            notif_dt=ora_notif,
+                            mesaj=genereaza_mesaj_notificare(task, f"Reminder {task.titlu}"),
+                            repetitiva=True
+                        )
                 messages.success(request, 'Task și notificările au fost create.')
 
                 return redirect('create_task')
@@ -78,17 +94,13 @@ def delete_task(request, task_id):
 def edit_task(request,task_id):
 
     task = get_object_or_404(Task, id_task=task_id)
-    notificari = Notificare.objects.filter(id_task=task)
-    notificari_actualizate = False
-    mesaj_eroare = None
+    notificari = Notificare.objects.filter(id_task=task,repetitiva=False)
 
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            task_save_needed = False
-            task_saved = form.save(commit=False)
-            if task_saved != task:
-                task_save_needed = True
+            # task_save_needed = False
+            task = form.save()
 
             for i in range(1, 4):
                 date_str = request.POST.get(f'notif_date_{i}')
@@ -110,28 +122,28 @@ def edit_task(request,task_id):
 
                             if notif_dt > timezone.now():
                                 notificare.save()
-                                notificari_actualizate = True
+                                # notificari_actualizate = True
                             else:
-                                mesaj_eroare = f'Notificare {i} Vii din trecut?🤔'
+                                messages.warning(request, f'Notificare {i}: Vii din trecut? 🤔')
                         else:
                             Notificare.objects.create(
                                 id_task=task,
                                 notif_dt=notif_dt,
                                 mesaj=mesaj
                             )
-                            notificari_actualizate = True
+                            # notificari_actualizate = True
                     except ValueError:
                         messages.warning(request, f'Notificarea {i} are un format invalid.')
 
-            if task_save_needed:
-                task_saved.save()
+            # if task_save_needed:
+            #     task_saved.save()
 
-            if not notificari_actualizate and not task_save_needed:
-                messages.info(request, 'Nu s-au făcut modificări.')
-            elif notificari_actualizate or task_save_needed:
-                messages.success(request, 'Task-ul și notificările au fost actualizate cu succes.')
-            elif mesaj_eroare:
-                messages.warning(request, mesaj_eroare)
+            # if not notificari_actualizate and not task_save_needed:
+            #     messages.info(request, 'Nu s-au făcut modificări.')
+            # elif notificari_actualizate or task_save_needed:
+            #     messages.success(request, 'Task-ul și notificările au fost actualizate cu succes.')
+            # elif mesaj_eroare:
+            #     messages.warning(request, mesaj_eroare)
 
             return redirect('edit-task', task_id=task.id_task)
     else:

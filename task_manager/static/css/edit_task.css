@@ -1,4 +1,4 @@
-#create-block{
+#edit-block{
     padding: 40px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.8); /* alb translucid */
@@ -76,29 +76,6 @@
     gap:10px;
 }
 
-.links{
-    box-sizing: border-box;
-    text-decoration: none;
-    background-color: var(--hover-blue);
-    color: #fff;
-    padding: 12px 20px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    display: inline-block;
-}
-
-.links:hover{
-    background-color: var(--myblue);
-    transform: scale(1.05);
-}
-
-.links:active{
-    transform: scale(1);
-}
 
 .notification-fieldset {
     border: 1px solid #ddd;
@@ -161,4 +138,46 @@
 .notification-fieldset .links {
     display: block;
     margin-top: 15px;
+}
+
+.links{
+    box-sizing: border-box;
+    text-decoration: none;
+    background-color: var(--hover-blue);
+    color: #fff;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: inline-block;
+}
+
+.links:hover{
+    background-color: var(--myblue);
+    transform: scale(1.05);
+}
+
+.links:active{
+    transform: scale(1);
+}
+
+#delete-task-btn, #delete-notif-btn{
+    background-color: #e74c3c !important;
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+    display: inline-block;
+}
+
+#delete-task-btn:hover,#delete-notif-btn:hover{
+    background-color: #c0392b !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(192, 57, 43, 0.5);
+}
+
+#save-changes-btn{
+    display: inline-block;
 }

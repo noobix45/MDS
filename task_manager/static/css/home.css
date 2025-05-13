@@ -34,7 +34,7 @@
     transform: scale(1);
 }
 
-#butoane-delete button, #confirm-delete-btn, #sortari button{
+#butoane-delete button, #confirm-delete-btn, #sortari button, #delete-account-btn{
     box-sizing: border-box;
     background-color: var(--hover-blue);
     color: #fff;
@@ -48,7 +48,7 @@
 }
 
 #delete-mode-btn,
-#confirm-delete-btn {
+#confirm-delete-btn,#delete-account-btn {
     background-color: #e74c3c !important;
     color: #fff !important;
     border: none;
@@ -56,10 +56,17 @@
 }
 
 #delete-mode-btn button:hover,
-#confirm-delete-btn:hover {
+#confirm-delete-btn:hover, #delete-account-btn:hover {
     background-color: #c0392b !important;
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(192, 57, 43, 0.5);
+}
+
+#logout-delete-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 #completed, #repetitive{

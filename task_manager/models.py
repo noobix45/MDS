@@ -155,6 +155,7 @@ class Notificare(models.Model):
     notif_dt = models.DateTimeField()
     mesaj = models.CharField(max_length=50, blank=True, null=True)
     trimis = models.BooleanField(blank=True,null=True,default=False)
+    repetitiva = models.BooleanField(default=False)
 
     class Meta:
         managed = False

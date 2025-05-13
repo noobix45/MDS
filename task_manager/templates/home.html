@@ -23,7 +23,15 @@
     {% if user.is_authenticated %}
         <div id="home-block">
         <h2>Welcome, {{ user.username }}!</h2>
-        <a class = "links" href="{% url 'logout' %}">Logout</a>
+
+        <div id="logout-delete-block">
+            <a class = "links" href="{% url 'logout' %}">Logout</a>
+
+{#            <form action="{% url 'delete-account' %}" method="post" onsubmit="return confirm('Ești sigur că vrei să-ți ștergi contul?');">#}
+{#                {% csrf_token %}#}
+{#                <button type="submit" id="delete-account-btn">Delete Account</button>#}
+{#            </form>#}
+        </div>
 
         {% if messages %}
             <ul>

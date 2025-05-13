@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{% load static %}
     <meta charset="UTF-8">
     <title>Edit Task</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'css/edit_task.css' %}">
 </head>
 <body>
+<div id="edit-block">
     {% if messages %}
         <ul>
             {% for message in messages %}
@@ -13,32 +17,55 @@
         </ul>
     {% endif %}
 
-    <h2>Edit Task</h2>
+    <h1>Edit Task</h1>
 
     <form method="POST">
         {% csrf_token %}
         {{ form.non_field_errors }}
 
-        <p>{{ form.titlu.label_tag }} {{ form.titlu }}</p>
-        <p>{{ form.importanta.label_tag }} {{ form.importanta }}</p>
-        <p>{{ form.deadline.label_tag }} {{ form.deadline }}</p>
-        <p>{{ form.repetitiv.label_tag }} {{ form.repetitiv }}</p>
-
-        <div id="days-def-wrapper">
-            <p id="days-field">{{ form.days_to_do.label_tag }} {{ form.days_to_do }}</p>
-            <p id="time-field">{{ form.def_time.label_tag }} {{ form.def_time }}</p>
+        <div class="form-group">
+            <label for="{{ form.titlu.id_for_label }}">Titlu:</label>
+            {{ form.titlu }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.importanta.id_for_label }}">Importanță (1-5):</label>
+            {{ form.importanta }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.deadline.id_for_label }}">Deadline:</label>
+            {{ form.deadline }}
+        </div>
+        <div class="form-group checkbox-label">
+            {{ form.repetitiv }} <label for="{{ form.repetitiv.id_for_label }}">Este repetitiv?</label>
         </div>
 
-        <p>{{ form.data_completare.label_tag }} {{ form.data_completare }}</p>
+        <div id="days-def-wrapper">
+             <div class="form-group" id="days-field">
+        <label for="{{ form.days_to_do.id_for_label }}">Zile de făcut (1-7):</label>
+        {{ form.days_to_do }}
+        {% if form.days_to_do.help_text %}
+            <small style="color: #555;">{{ form.days_to_do.help_text }}</small>
+        {% endif %}
+    </div>
+            <div class="form-group" id="time-field">
+                <label for="{{ form.def_time.id_for_label }}">Ora notificare implicită:</label>
+                {{ form.def_time }}
+    </div>
+        </div>
+
+    <div class="form-group">
+        <label for="{{ form.data_completare.label_tag }}">Data completare:</label>
+        {{ form.data_completare }}
+    </div>
 
         {% include "edit_notif.html" %}
 
-        <button type="submit">Save Changes</button>
+        <button id="save-changes-btn" class="links" type="submit">Save Changes</button>
     </form>
 
     <form method="POST" action="{% url 'delete_task' task.id_task %}">
         {% csrf_token %}
-        <button type="submit" style="color: red;">Delete Task</button>
+        <button id="delete-task-btn" class="links" type="submit">Delete Task</button>
     </form>
 
     <script>
@@ -62,9 +89,9 @@
         document.addEventListener("DOMContentLoaded", toggleFields);
     </script>
 
-    <a href="{% url 'home' %}">
-        <button type="button">Back to Home</button>
+    <a class="links" href="{% url 'home' %}">
+        Back to Home
     </a>
-
+</div>
 </body>
 </html>
