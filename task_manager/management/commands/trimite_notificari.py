@@ -41,7 +41,6 @@ class Command(BaseCommand):
                     )
                     total_emailuri_trimise += 1
 
-            # Marchează notificarea ca trimisă o singură dată (nu per utilizator)
             notif.trimis = True
             notif.save()
 

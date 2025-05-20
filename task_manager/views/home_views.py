@@ -1,3 +1,4 @@
+from django.db import connection
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate
 from task_manager.forms.user_forms import UserRegistrationForm
@@ -63,7 +64,18 @@ def logout_view(request):
     return redirect('home')
 
 def delete_account(request):
-    user = request.user
+    user_auth_id = request.user.id
     logout(request)
-    user.delete()
+
+    try:
+        utilizator = Utilizator.objects.get(user_id=user_auth_id)
+        user_app_id = utilizator.id_utilizator  # dacă ai nevoie de el
+    except Utilizator.DoesNotExist:
+        user_app_id = None
+
+    with connection.cursor() as cursor:
+        if user_app_id is not None:
+            cursor.execute("DELETE FROM utilizator WHERE id_user = %s", [user_auth_id])
+        cursor.execute("DELETE FROM auth_user WHERE id = %s", [user_auth_id])
+
     return redirect('register')

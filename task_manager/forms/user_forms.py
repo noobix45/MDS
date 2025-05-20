@@ -27,7 +27,7 @@ class UserRegistrationForm(forms.ModelForm):
         })
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        user = super().save(commit=False) #saveaza local ca sa poata cripta parola
         user.set_password(self.cleaned_data['password'])  # hash-uiește parola
         if commit:
             user.save()

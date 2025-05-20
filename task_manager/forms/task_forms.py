@@ -1,5 +1,7 @@
 # task_manager/forms.py
 from django import forms
+from django.utils import timezone
+
 from task_manager.models import Task
 
 class TaskForm(forms.ModelForm):
@@ -41,17 +43,28 @@ class TaskForm(forms.ModelForm):
         }
 
     def clean_days_to_do(self):
-        data = self.cleaned_data.get('days_to_do','').strip()
+        repetitiv = self.cleaned_data.get('repetitiv')
+        data = self.cleaned_data.get('days_to_do', '').strip()
+
+        if not repetitiv:
+            return []  # returnează listă goală, nu None!
+
         if not data:
-            return None
+            raise forms.ValidationError('Pentru taskuri repetitive trebuie să specifici zilele.')
 
         try:
             days = [int(x.strip()) for x in data.split(',') if x.strip()]
         except ValueError:
-            raise forms.ValidationError('Zilele  trebuie sa fie numere intregi  separate prin virgula.')
+            raise forms.ValidationError('Zilele trebuie să fie numere întregi separate prin virgulă.')
 
         for day in days:
             if day < 1 or day > 7:
                 raise forms.ValidationError('Zilele trebuie să fie între 1 și 7.')
 
         return days
+
+    def clean_deadline(self):
+        deadline = self.cleaned_data.get('deadline')
+        if deadline and deadline < timezone.now().date():
+            raise forms.ValidationError("Deadline-ul nu poate fi înainte de data curentă.")
+        return deadline

@@ -19,6 +19,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'trimite-notificari': {
         'task': 'task_manager.tasks.trimite_notificari_periodic',
-        'schedule': crontab(minute='*/3'),  # Fiecare 3 minute
+        'schedule': crontab(minute='*/3'),  #la 3 minute
     },
 }

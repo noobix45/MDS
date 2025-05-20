@@ -10,13 +10,19 @@
 </head>
 <body>
 <div id="create-block">
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% if alert_error %}
+<script>
+    alert("Data notificării nu poate fi înainte de data creării taskului.");
+</script>
+{% endif %}
+
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
     <h1>Create a New Task</h1>
 
@@ -61,16 +67,16 @@
             <fieldset class="notification-fieldset">
                 <legend>Notificare {{ i }}</legend>
                 <div class="form-group notification-group">
-                    <label for="notif_date_{{ i }}">Data:</label>
-                    <input type="date" id="notif_date_{{ i }}" name="notif_date_{{ i }}" class="input-field">
+                    <label for="notificare_data_{{ i }}">Data:</label>
+                    <input type="date" id="notificare_data_{{ i }}" name="notificare_data_{{ i }}" class="input-field">
                 </div>
                 <div class="form-group notification-group">
-                    <label for="notif_time_{{ i }}">Ora:</label>
-                    <input type="time" id="notif_time_{{ i }}" name="notif_time_{{ i }}" class="input-field">
+                    <label for="notificare_ora_{{ i }}">Ora:</label>
+                    <input type="time" id="notificare_ora_{{ i }}" name="notificare_ora_{{ i }}" class="input-field">
                 </div>
                 <div class="form-group notification-group">
-                    <label for="notif_msg_{{ i }}">Mesaj:</label>
-                    <input type="text" id="notif_msg_{{ i }}" name="notif_msg_{{ i }}" maxlength="50" class="input-field">
+                    <label for="notificare_text_{{ i }}">Mesaj:</label>
+                    <input type="text" id="notificare_text_{{ i }}" name="notificare_text_{{ i }}" maxlength="50" class="input-field">
                 </div>
             </fieldset>
         {% endfor %}
